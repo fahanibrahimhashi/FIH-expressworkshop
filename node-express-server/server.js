@@ -2,6 +2,9 @@ const express = require("express");
 
 const server = express();
 
+const bodyParser = express.urlencoded({ extended: true });
+
+
 server.get("/", (request, response, next) => {
   console.log(request.method + " " + request.url);
   next();
@@ -11,12 +14,8 @@ server.get("/", (request, response) => {
   response.send("<h1>Hello</h1>");
 });
 
-server.use((request, response) => {
-  response.status(404).send("<h1>Not found</h1>");
-});
-
-server.post("/submit", (request, response) => {
-  console.log("posted");
+server.post("/submit", bodyParser, (request, response) => {
+  console.log(request.body);
   response.send("thanks for submitting");
 });
 
